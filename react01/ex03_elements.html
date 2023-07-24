@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>** React Elements **</title>
+</head>
+
+<body>
+    <pre>
+** React 의 기본 구동원리
+    => 가상 DOM
+        리엑트 엘리먼트로 이루어진 DOM
+        리엑트는 효율적 SPA 를 위해 브라우저 DOM 을 갱신해주기 위한 라이브러리이고 이를 위해 직접
+        DOM 을 다루는 것 보다 가상 DOM 을 다루는 것이 더 편리함.
+    
+    => 리엑트 엘리먼트 만들기 : React.createElement(엘리먼트 타입, 엘리먼트 속성, 컨텐츠)
+
+    => 브라우저에 랜더링 : ReactDOM.render(랜더링할_엘리먼트, 렌더링대상_DOM_노드)
+    </pre>
+    <hr>
+
+    <!-- 타겟 컨테이너 -->
+    <div id="react-container"></div>
+
+    <!--React와 ReactDOM 라이브러리React Library & React DOM-->
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <script>
+        // dish 라는 리엑트 엘리먼트 만들기
+        // => React.createElement(엘리먼트 타입, 엘리먼트 속성({}로 여러 속성 설정 가능), 컨텐츠)
+        const dish = React.createElement('h1',
+            { id: 'recipe-0', 'data-type': 'title' },
+            '구운 연어, Hello React !!!');
+
+        // 브라우저에 랜더링
+        // => ReactDOM.render(랜더링할_엘리먼트, 렌더링대상_DOM_노드)
+        ReactDOM.render(dish, document.getElementById('react-container'));
+
+        console.log(`dish = ${dish}`);
+    </script>
+</body>
+
+</html>
