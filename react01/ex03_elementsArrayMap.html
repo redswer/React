@@ -53,7 +53,7 @@
         const cookSteps = React.createElement(
             'section',
             { 'className': 'instructions' },
-            steps.map((step, s) => React.createElement('p', { key: s }, step))
+            steps.map((step, index, s) => React.createElement('p', { key: s + index }, `${index + 1}. ${step}`))
         );
 
         function ingre() {
