@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>** React Component02 : function 연습 **</title>
+</head>
+
+<body>
+    <h2>** React Component02 : function 연습 **</h2>
+    <button onclick="test1()">*재료*</button>
+    <button onclick="test2()">*조리법*</button>
+    <hr>
+    <div id="container"></div>
+    <hr>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <script>
+        // 과제
+        /* 배열로 data 를 전달받아 ul, li 로 출력하는 함수형 컴포넌트를 정의하고 배열 2개, 버튼 2개 를 정의하여
+        출력하도록 완성 (data 갯수는 5개 이상) */
+
+        let ingredients = ['물 550ml', '라면 1개', '양파 반개', '고춧가루 1스푼', '계란 1개'];
+        let steps = ['물 550ml 를 끓인다.', '양파 반개를 얇게 썬다.', '물이 끓으면 계란을 제외한 재료를 모두 넣는다.',
+            '약 3분간 끓이다가 계란을 넣고 30초 후에 불을 끈다.', '완성'];
+
+        const test = ({ items }) => {
+            return React.createElement(
+                'ul',
+                null,
+                items.map((item, i) => React.createElement('li', { key: i }, item))
+            );
+        }
+
+
+        function test1() {
+            ReactDOM.render(React.createElement(test, { items: ingredients }, null),
+                document.getElementById('container'));
+        }
+
+        function test2() {
+            ReactDOM.render(React.createElement(test, { items: steps }, null),
+                document.getElementById('container'));
+        }
+    </script>
+</body>
+
+</html>
