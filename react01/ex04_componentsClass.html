@@ -39,6 +39,25 @@
 
         ReactDOM.render(React.createElement(IngredientList, null, null),
             document.getElementById('container'));
+
+
+        /* class IngredientList2 extends React.Component {
+            // renderListItem 메서드 정의하고, 아래 map에서 콜백함수 대신 호출해서 사용함
+            renderListItem(item, i) {
+                return React.createElement('li', { key: i }, item);
+            }
+
+            render() {
+                return React.createElement(
+                    'ul',
+                    { 'className': "ingredients" },
+                    items.map(this.renderListItem)
+                )
+            }
+        }
+
+        ReactDOM.render(React.createElement(IngredientList2, { items }, null),
+            document.getElementById('container')); */
     </script>
 </body>
 
