@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>** React Components01 : class **</title>
+</head>
+
+<body>
+    <h3>** React Components01 : class **</h3>
+    <hr>
+    <div id="container"></div>
+    <hr>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <script>
+        // ** 리액트 콤포넌트 역사
+        // => React.createClass(최초) -> class 컴포넌트(React.Component) -> 함수 컴포넌트
+        // ** class 컴포넌트
+        // => 최근에는 권장하지 않는 문법, 참고만 한다.
+
+        // map 을 이용한 class 컴포넌트
+        let items = ['연어 500그램', '잣 1 컵', '버터 상추 2 컵'
+            , '옐로 스쿼시(Yellow Squash, 호박의 한 종류) 1개', '올리브 오일 1/2 컵', '마늘 3 쪽'];
+
+        class IngredientList extends React.Component {
+            render() {
+                // element 를 만들어줌
+                return React.createElement(
+                    'ul',
+                    { 'className': "ingredients" },
+                    items.map((item, i) => React.createElement('li', { key: i }, item))
+                );
+            }
+        }
+
+        ReactDOM.render(React.createElement(IngredientList, null, null),
+            document.getElementById('container'));
+    </script>
+</body>
+
+</html>
