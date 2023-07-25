@@ -11,6 +11,7 @@
     <h2>** React Component02 : function 연습 **</h2>
     <button onclick="test1()">*재료*</button>
     <button onclick="test2()">*조리법*</button>
+    <button onclick="img()">*이미지*</button>
     <hr>
     <div id="container"></div>
     <hr>
@@ -44,6 +45,15 @@
         function test2() {
             ReactDOM.render(React.createElement(test, { items: steps }, null),
                 document.getElementById('container'));
+        }
+
+        const image = React.createElement(
+            'img',
+            { src: "../image/1.png", width: '350px', height: '350px' },
+            null
+        )
+        function img() {
+            ReactDOM.render(image, document.getElementById('container'));
         }
     </script>
 </body>
