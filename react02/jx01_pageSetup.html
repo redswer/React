@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>** JSX 사용 기본 Page **</title>
+</head>
+
+<body>
+    <div id="container"></div>
+
+    <!-- React와 ReactDOM 라이브러리React Library & React DOM -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!-- JSX 를 사용한 ReactCode 를 기본 JS Code 로 변환 시켜주는 과정이 필요
+    => CDN 으로 babel을 활용 -->
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <script>
+        // JSX 활용 팁
+        // JSX 컴포넌트 => 순수  React 컴포넌트 => JS 가 html 로 표현
+        /*
+        1) 컴포넌트의 계층 구조 표현
+            <ParentList>
+                <ChildComp />
+                <ChildComp />
+                <ChildComp />
+                <ChildComp />
+            </ParentList>
+
+        2) Html Tag 와 JavaScript 표현식 사용
+            <h1>{'Hello JSX : ' + title}</h1>
+            <h1>{num1 + num2}</h1>
+            <h1>{boollTrue || boolFalse}</h1>
+            <h1>{boollTrue && boolFalse}</h1>
+            <input type="checkbox" defaultChecked={false} />
+
+        3) className : class JS 의 예약어이므로 컴포넌트에서 class 속성 대신 사용
+
+        4) 배열을 JSX 로 매핑
+        // 이전 예제의 items.map 으로 작성했던 li 부분을 {}로
+            <ul>
+                {items.map((item, i) => ( <li key = {i}>{item}</li> ))}
+            </ul>
+         */
+
+    </script>
+</body>
+
+</html>

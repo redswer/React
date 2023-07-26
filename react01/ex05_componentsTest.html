@@ -36,7 +36,6 @@
             );
         }
 
-
         function test1() {
             ReactDOM.render(React.createElement(test, { items: ingredients }, null),
                 document.getElementById('container'));
@@ -47,11 +46,13 @@
                 document.getElementById('container'));
         }
 
+
         const image = React.createElement(
             'img',
             { src: "../image/1.png", width: '350px', height: '350px' },
             null
         )
+        
         function img() {
             ReactDOM.render(image, document.getElementById('container'));
         }
