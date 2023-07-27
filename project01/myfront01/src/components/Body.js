@@ -22,7 +22,7 @@
 import './Body.css';
 
 //  컴포넌트명은 대문자로 시작
-function Body() {
+function Body(props) {
     let n1 = 10,
         n2 = 20;
 
@@ -39,19 +39,24 @@ function Body() {
 
     if (b1) {
         return (
-            // class 는 JS 예약어 이므로 className 으로 사용
             <body className='body'>
+                {/* class 는 JS 예약어 이므로 className 으로 사용 */}
+
+                <h1>** Body : JSX Test ** : {props.name}</h1>
+                {/* 부모(App.js) 에서 전달된 props 확인 */}
+
+                <p style={{ color: 'yellow', backgroundColor: 'green' }}>산술식 : n1 + n2 = {n1 + n2}</p>
                 {/* ** Css, 스타일 적용하기
                      => 인라인 스타일링 : style={{ 스타일...}} */}
-                <h1 style={{ color: 'yellow', backgroundColor: 'green' }}>** Body : JSX Test **</h1>
-                <p>산술식 : n1 + n2 = {n1 + n2}</p>
+
                 <p>문자식 : s1 + s2 = {`${s1} ${s2}`}</p>
                 <p>논리식 : or = {b1 || b2}, and = {b1 && b2}</p>
                 {/* <p>{obj}</p> 는 오류
                     => {} 내에서 객체, 배열명 직접 사용은 불허 */}
+
                 <p>Object : obj.id = {obj.id}, obj.name = {obj.name}</p>
                 <p>삼항식으로 n1 + n2 의 값이 짝수이면 '짝수', 아니면 '홀수' 출력하기</p>
-                <p>n1 + n2 = {(n1 + n2) % 2 == 0 ? '짝수' : '홀수'}</p>
+                <p>n1 + n2 = {(n1 + n2) % 2 === 0 ? '짝수' : '홀수'}</p>
                 {/* 조건부 랜더링 : 삼항식 (조건문은 JSX 에서 사용 불가능) */}
             </body>
         );
@@ -64,8 +69,6 @@ function Body() {
             </div>
         )
     };
-
-
 };
 
 export default Body;
