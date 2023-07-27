@@ -21,8 +21,10 @@
     css 는 real_File_path 만 명시함 */
 import './Body.css';
 
-//  컴포넌트명은 대문자로 시작
+// 함수형 컴포넌트
 function Body(props) {
+    //  컴포넌트명(Body)은 대문자로 시작
+    // 부모로부터 전달받는 매개변수 명은 자유롭게 사용 가능하지만, 일반적으로 props 를 권장
     let n1 = 10,
         n2 = 20;
 
@@ -42,7 +44,9 @@ function Body(props) {
             <body className='body'>
                 {/* class 는 JS 예약어 이므로 className 으로 사용 */}
 
-                <h1>** Body : JSX Test ** : {props.name}</h1>
+                <h1>** Body : JSX Test **</h1>
+
+                <p>props : props.name = {props.names}, country = {props.country}</p>
                 {/* 부모(App.js) 에서 전달된 props 확인 */}
 
                 <p style={{ color: 'yellow', backgroundColor: 'green' }}>산술식 : n1 + n2 = {n1 + n2}</p>
