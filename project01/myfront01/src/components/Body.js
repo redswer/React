@@ -20,6 +20,7 @@
 /* 컴포넌트는 import MyComp({ }) from "module(real_File_path)"; 형식이지만,
     css 는 real_File_path 만 명시함 */
 import './Body.css';
+import img1 from "./image/aaa.gif";
 
 // 함수형 컴포넌트
 function Body(props) {
@@ -39,7 +40,7 @@ function Body(props) {
         name: '바나나'
     }
 
-    if (b1) {
+    if (b2) {
         return (
             <body className='body'>
                 {/* class 는 JS 예약어 이므로 className 으로 사용 */}
@@ -69,7 +70,7 @@ function Body(props) {
             <div>
                 <h1>** Body : JSX Test **</h1>
                 <p>if 조건문 test : false</p>
-
+                <img src={img1} style={{width:300, height:300}}></img>
             </div>
         )
     };
