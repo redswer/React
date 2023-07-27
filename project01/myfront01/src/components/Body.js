@@ -22,6 +22,10 @@
 import './Body.css';
 import img1 from "./image/aaa.gif";
 
+// 최상위 Tag 규칙 (필요시 <div> 또는 <React.Fragment> Tag 로 감싸줌)를 위해 react import
+import React from 'react';
+
+
 // 함수형 컴포넌트
 function Body(props) {
     //  컴포넌트명(Body)은 대문자로 시작
@@ -38,6 +42,11 @@ function Body(props) {
     let obj = {
         id: 'banana',
         name: '바나나'
+    }
+
+    // 이벤트 핸들러
+    function clickTest() {
+        alert('** 이벤트 테스트 중 : 안녕하세요 **');
     }
 
     if (b2) {
@@ -67,11 +76,19 @@ function Body(props) {
         );
     } else {
         return (
-            <div>
-                <h1>** Body : JSX Test **</h1>
-                <p>if 조건문 test : false</p>
-                <img src={img1} style={{width:300, height:300}}></img>
-            </div>
+            // 최상위 Tag 규칙 => div 대신  <React.Fragment> Tag 로 감싸줌
+            <React.Fragment>
+                <div>
+                    <h1>** Body : JSX Test **</h1>
+                    <p>if 조건문 test : false</p>
+                    <img src={img1} alt={'imgTest'} style={{ width: 300, height: 300 }}></img>
+                    <br></br>
+                    <br></br>
+                    <button onClick={clickTest} style={{ height: 50 }}>클릭하세요!</button>
+                    {/* onClick : c 를 대문자로 */}
+                </div>
+                <div>최상위 Tag 규칙 : React.Fragment Tag 로 감싸줌</div>
+            </React.Fragment>
         )
     };
 };
