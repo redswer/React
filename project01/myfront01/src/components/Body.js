@@ -1,102 +1,55 @@
-// ** State
-// => 값을 저장하거나 변경 할 수 있는 객체로 이벤트와 함께 주로 사용됨.
-//    - 즉, 버튼 클릭시 버튼의 컬러를 변경할때 등에 사용됨 
-//    - 이벤트 발생 -> 이로인하여 화면의 리랜더링이 필요한 경우 리랜더링이 자동으로실행될 수 있도록 해줌
-//      -> State변수 로 지정된 변수의 값에 변화가 일어나면 리액트 에서는 리랜더링 해줌  
-// => useState 생성자함수로 State 생성
-//    const [text_State변수, setText_set함수] = useState("초기값");
-// => useState 를 호출하면 현재상태값과 이 State변수의 값을 변경하는 set함수를 담은 배열을 return.
-// => 이후 State변수 값이 변하면 이를 반영하기위해 컴포넌트를 리랜더링 함.
-//    ( 이것을 컴포넌트의 Update 라함 )
-
-// ** State 로 사용자 입력 관리하기
-// => 사용자가 Text 를 입력할때마다 console 출력하기 
-// => 과제 "-" 버튼 만들기
-//    - 최소값은 0 : alert 경고창 출력   
-//    - 최대값은 100 : alert 경고창 출력, 0 으로 초기화
+// ** Props 와 State **
+// => State 도 값이므로 Props 로 전달 가능
+// => Body 에 Child 컴포넌트 만들고 전달 Test
+// => 전달된 부모 State 값이 변하면 Child 컴포넌트도 리랜더링 됨.
+// => state 를 전달하지않은 경우와 비교
+//    부모가 리랜더링 되면 Child 컴포넌트도 리랜더링됨  
 
 import { useState } from 'react';
 import './Body.css';
 
+// child 컴포넌트 만들기
+function Viewer(props) {
+    console.log(props);
+
+    // 부모로부터 전달받은 값이 짝수/홀수 인지 출력
+    /*
+        if (props.number % 2 == 0) {
+            return (
+                <div>짝수 <p>여기는 child 컴포넌트</p></div>
+            );
+        } else {
+            return (
+                <div>홀수 <p>여기는 child 컴포넌트</p></div>
+            );
+        }
+     */
+    return (
+        <div>{props.number % 2 == 0 ? '짝수' : '홀수'}<p>여기는 child 컴포넌트</p></div>
+    );
+}
+
 function Body() {
-    // ** state Test1 : 개별적으로 관리
-    let count2 = 0;
-    const [count, setCount] = useState(0);
-    const onIncrease = () => {
-        if (count > 19) {
-            alert('!! 용량 초과 !!');
-            setCount(0);
-            count2 = 0;
-        } else {
-            count2 += 1;
-            console.log('state_count Test => ' + count2);
-            if (count2 % 5 == 0) setCount(count + 5);
-        }
-    } //onIncrease
-    const onDecrease = () => {
-        if (count < 1) {
-            alert('!! 최소값 입니다~ !!');
-            setCount(0);
-            count2 = 0;
-        } else {
-            count2 -= 1;
-            if (count2 % 5 == 0) setCount(count - 5);
-        }
-    } //onDecrease
-
-    // ** state Test2 : 다양한 input Tag
-    // => text ( textarea 도 동일함, value 속성값으로 전달 )
-    const [text, setText] = useState('');
-    const textChange = (e) => {
-        setText(e.target.value);
-    } //textChange
-    // => date
-    const [date, setDate] = useState('');
-    const dateChange = (e) => {
-        console.log('** Date => ' + e.target.value);
-        setDate(e.target.value);
-    }
-    // => select
-    // -> html 과 차이점
-    //    selected 대신 value를 사용해 기본값 할당. (아래코드에서는 애플)
-    //    선택된 option 값을 가져오려면, onChange를 사용해야하며,
-    //    option 의 컨텐츠가 select 의 value 에 전달됨.
-    //    ( select Tag 에 value 속성을 정의하지 않아도 전달됨 )
-
-    // => props 로 option을 동적으로 만드는경우
-    //    props 로 전달받은 Data_list 를 이용해 option 을 만드는 경우에는
-    //    option 의 key, value 속성을 이용함
-    //    ( https://blog.toycrane.xyz/react에서-select-box-컴포넌트-만들기-a20e2bf082b2 )
-    const [option, setOption] = useState('애플');
-    const jobChange = (e) => {
-        console.log('** select : value=' + e.target.value);
-        setOption(e.target.value);
-    }
+    const [number, setNumber] = useState(0);
+    const onIncrease = () => { setNumber(number + 1) }
+    const onDecrease = () => { setNumber(number - 1) }
 
     // ** 컴포넌트의 Update 확인
     console.log('** 컴포넌트의 Update');
+
     return (
         <div className='body'>
-            <h2>** Body State Test 1 : 개별적으로 관리 **</h2>
+            <h2>** Props 와 State Test **</h2>
+            <h3>state 변수 : number = {number}</h3>
+            <p>Props 로 number 값을 Child 컴포넌트에 전달</p>
+            <Viewer number={number} />
 
             <div>
-                <input value={name} onChange={onChangeName} placeholder='이름' />
-            </div>
-            <div>
-                <select value={gender} onChange={onChangeGender}>
-                    <option>''</option>
-                    <option>남성</option>
-                    <option>여성</option>
-                </select>
-            </div>
-            <div>
-                <input type='date' value={birth} onChange={onChangeBirth} />
-            </div>
-            <div>
-                <textarea value={data} onChange={onChangeInfo} />
+                <button onClick={onIncrease}>+</button>
+                <button onClick={onDecrease}>-</button>
             </div>
         </div>
-    ); //return
+    );
+}
 
-} //Body
 export default Body;
