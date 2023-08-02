@@ -19,22 +19,28 @@ import { useState } from 'react';
 import './Body.css';
 
 function Body() {
-    // ** state Test1
+    // ** state Test1 : 개별적으로 관리
+    let count2 = 0;
     const [count, setCount] = useState(0);
     const onIncrease = () => {
-        if (count > 9) {
+        if (count > 19) {
             alert('!! 용량 초과 !!');
             setCount(0);
+            count2 = 0;
         } else {
-            setCount(count + 1);
+            count2 += 1;
+            console.log('state_count Test => ' + count2);
+            if (count2 % 5 == 0) setCount(count + 5);
         }
     } //onIncrease
     const onDecrease = () => {
         if (count < 1) {
             alert('!! 최소값 입니다~ !!');
             setCount(0);
+            count2 = 0;
         } else {
-            setCount(count - 1);
+            count2 -= 1;
+            if (count2 % 5 == 0) setCount(count - 5);
         }
     } //onDecrease
 
@@ -71,23 +77,23 @@ function Body() {
     console.log('** 컴포넌트의 Update');
     return (
         <div className='body'>
-            <h1>** Body **</h1>
-            <p>** State Test **</p>
-            <button onClick={onIncrease}>+</button>
-            <span>count={count}</span>
-            <button onClick={onDecrease}>-</button>
+            <h2>** Body State Test 1 : 개별적으로 관리 **</h2>
+
             <div>
-                <input value={text} onChange={textChange} />
-                <span>{text}</span>
-                <p>[연습] input Tag 의 type date 활용해서 값이 변경될때 마다 그값을 console 로 출력하기</p>
-                <input type='date' value={date} onChange={dateChange} />
-                <select onChange={jobChange} value={option}>
-                    <option>구글</option>
-                    <option>애플</option>
-                    <option>네이버</option>
-                    <option>카카오</option>
-                    <option>MS</option>
+                <input value={name} onChange={onChangeName} placeholder='이름' />
+            </div>
+            <div>
+                <select value={gender} onChange={onChangeGender}>
+                    <option>''</option>
+                    <option>남성</option>
+                    <option>여성</option>
                 </select>
+            </div>
+            <div>
+                <input type='date' value={birth} onChange={onChangeBirth} />
+            </div>
+            <div>
+                <textarea value={data} onChange={onChangeInfo} />
             </div>
         </div>
     ); //return
