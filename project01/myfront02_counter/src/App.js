@@ -84,6 +84,36 @@ function App() {
     }
   });
 
+
+  // 6) unMount 제어
+  /* 클린업(clean up) : 특정 함수가 실행되고 종료된 후, 미처 정리하지 못한 사항을 정리
+     클린업 필요성 test => useEffect (setInterval 사용하고 배열 없는) 추가 */
+  useEffect(() => { setInterval(() => { console.log('** 깜빡 **') }, 1000) });
+  // => 두번째 인자 배열이 없으므로 랜더링 할때마다 콜백함수 실행됨
+  // => 콜백함수에서 호출한 setInterval 에 의해 1초마다 콘솔출력됨
+  // => 그러나 + , - 클릭으로 리랜더링이 일어나면, 1초 상관없이 출력됨
+  // => 콜백함수에서 호출한 setInterval 에 의해 1초마다 콘솔출력됨
+  // => 이유 : setInterval 을 계속 호출하므로 복수의 setInterval 이 계속 생성되기때문
+  //           호출한 setInterval 을 종료시켜주지 않았기 때문
+  //          (setInterval 은 clearInterval 을 호출해서 종료시켜야 멈춤)
+  // => 해결 : useEffect 의 클린업 기능
+
+  // => 클린업 함수
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      console.log('** 깜빡 **');
+    }, 1000);
+
+    return () => {
+      console.log('** 클린업 함수 **');
+      clearInterval(intervalId);
+    }
+  });
+  //    - useEffect 의 콜백함수에서 return 하는 함수
+  //    - 콜백함수를 재호출하기 전에 실행됨,
+  // => 그러므로 이를 이용하여 리랜더링 할때마다 새 setInterval 생성하고 
+  //    기존 setInterval 은 삭제하도록 할 수 있다.  
+
   return (
     <div className='App'>
       <h2>* Simple Counter *</h2>
