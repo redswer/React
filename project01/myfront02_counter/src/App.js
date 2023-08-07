@@ -27,10 +27,13 @@
 // => 4) Mount 제어
 // => 5) Update(리랜더링)시에만 호출하도록 변경
 // => 6) UnMount 제어
+//    6.1) 클린업 이해 (setInterval 활용)
+//    6.2) 클린업을 이용한 언마운트 제어하기
 
 import './App.css';
 import Controller from './components/Controller';
 import Viewer from './components/Viewer';
+import Even from './components/Even';
 
 import { useEffect, useRef, useState } from "react";
 
@@ -86,6 +89,8 @@ function App() {
 
 
   // 6) unMount 제어
+
+  // 6.1) 클린업 이해 (setInterval 활용)
   /* 클린업(clean up) : 특정 함수가 실행되고 종료된 후, 미처 정리하지 못한 사항을 정리
      클린업 필요성 test => useEffect (setInterval 사용하고 배열 없는) 추가 */
   useEffect(() => { setInterval(() => { console.log('** 깜빡 **') }, 1000) });
@@ -108,17 +113,26 @@ function App() {
       console.log('** 클린업 함수 **');
       clearInterval(intervalId);
     }
+    //    - useEffect 의 콜백함수에서 return 하는 함수
+    //    - 콜백함수를 재호출하기 전에 실행됨,
+    // => 그러므로 이를 이용하여 리랜더링 할때마다 새 setInterval 생성하고 
+    //    기존 setInterval 은 삭제하도록 할 수 있다.
   });
-  //    - useEffect 의 콜백함수에서 return 하는 함수
-  //    - 콜백함수를 재호출하기 전에 실행됨,
-  // => 그러므로 이를 이용하여 리랜더링 할때마다 새 setInterval 생성하고 
-  //    기존 setInterval 은 삭제하도록 할 수 있다.  
+
+  // 6.2) 클린업을 이용한 언마운트 제어하기
+  // => count 값이 짝수면 "짝수 입니다" 를 출력하는 컴포넌트 (Even.jsx) 를 만든다.
+  // => 이를 이용하여 조건부 랜더링 구현 ( import, <Even /> 랜더링코드 추가 )
+  // => Even 에 useEffect 를 추가해서 언마운트 메시지 출력하기
 
   return (
     <div className='App'>
       <h2>* Simple Counter *</h2>
       <section><input value={text} onChange={onChangeText} /></section>
-      <section><Viewer count={count} /></section>
+      <section>
+        <Viewer count={count} />
+        {/* && : 앞쪽의 조건식이 참이면 뒤쪽 리턴값 랜더링(거짓이면 아무것도 랜더링하지않음) */}
+        {count % 2 == 0 && <Even />}
+      </section>
       <section><Controller onChangeState={onChangeState} /></section>
     </div>
   );
