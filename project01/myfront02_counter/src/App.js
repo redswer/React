@@ -69,13 +69,13 @@ function App() {
   /* 위쪽의 3) 랜더링에서 최초 렌더링(마운트 시점)만 제외시켜주면 됨 */
 
   // 최초 랜더링인지 판별하는 변수를 정의하고 초기값을 false로 지정 (Ref 객체로 생성)
-  const didMountRef = useRef(false);
+  const isUpdateRef = useRef(false);
 
   useEffect(() => {
 
     // 최초 랜더링(Mount)인지 확인하고, 아닌 경우에만 출력
-    if (!didMountRef.current) {
-      didMountRef.current = true;
+    if (!isUpdateRef.current) {
+      isUpdateRef.current = true;
       // 출력하지 않고 return(콜백함수 종료)
       return;
 
