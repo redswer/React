@@ -1,10 +1,7 @@
-import './App.css';
-
-// ** to do list (일정관리 앱)
-// 1. UI 설계
 import Header from './components/Header';
 import TodoEditor from './components/TodoEditor';
 import TodoList from './components/TodoList';
+import './App.css';
 
 // 2. Mock Data 만들기 => Mock Data: 모조 Data (개발중 테스트 목적으로 사용하는 Data)
 /*
