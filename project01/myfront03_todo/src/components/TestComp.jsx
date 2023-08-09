@@ -62,7 +62,7 @@ function reducer(state, action) {
             return state - action.data;
 
         case 'Initial':
-            return action.data;
+            return 0;
 
         default:
             return state;
@@ -90,7 +90,7 @@ function TestComp() {
                 <button onClick={() => dispatch({ type: 'Decrease', data: 1 })}>-</button>
             </div>
             <div style={{ marginTop: '10px' }}>
-                <button onClick={() => dispatch({ type: 'Initial', data: 0 })}>초기화</button>
+                <button onClick={() => dispatch({ type: 'Initial' })}>초기화</button>
             </div>
         </div>
     );
