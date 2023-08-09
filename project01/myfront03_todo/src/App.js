@@ -16,6 +16,11 @@ import './App.css';
         => new Date().getTime()
             Date 값을 getTime 메서드를 이용해 타임스템프 값으로 변환
             이렇게 하면 보관데이터 용량이 줄어듬
+
+// ** Date 주요 메서드
+// => toDateString() :  날짜를 문자열로
+// => toLocaleDateString() : 지역별 맞는 포맷으로
+
 */
 const mockTodo = [{
   id: 0,
