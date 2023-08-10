@@ -14,15 +14,11 @@ import { Routes, Route, Link, NavLink } from 'react-router-dom';
 // => src -> components, pages, images
 
 // 3. 실습
-// 3.1) Routes, Route 컴포넌트
+// 3.1) BrowserRouter 컴포넌트
 
-// 3.2) HashRouter 컴포넌트
-// => url 에 # 을 추가해 어떤 Path 에서 접근 하더라도
-//    동일한 웹Page 를 제공할 수 있도록 해줌
-// => BrowserRouter 와 비교해본다 
+// 3.2) HashRouter 컴포넌트 
 
 // 3.3) Nested Routing
-// => Topics.jsx
 
 function App() {
   return (
@@ -66,7 +62,12 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/topics' element={<Topics />} />
+
+        {/* Nested Routing */}
+        {/* <Route path='/topics' element={<Topics />} /> */}
+        <Route path='/topics/*' element={<Topics />} />
+        {/* => Topics 컴포넌트에서의 Route 를 위해 path의 topoics 뒤에 /* 를 붙여줌 */}
+
         <Route path='/contact' element={<Contact />} />
       </Routes>
     </div>
