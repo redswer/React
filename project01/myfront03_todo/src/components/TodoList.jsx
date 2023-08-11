@@ -1,66 +1,98 @@
-// ** 검색기능 추가
-// 검색어 처리 위한 state 변수 추가
-// input 엘리먼트에 속성 추가
-// 검색어 처리 위한 필터링 기능
-
-// ** Array.prototype.filter()
-// filter() 메서드는 주어진 콜백함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열로 반환.
-// arr.filter(callback(element[, index[, array]])[, thisArg])
-
-// callback 함수: 각 요소를 시험할 함수, true 반환하면 요소를 유지하고, false 반환하면 버림.
-//    -> element : 처리할 현재 요소.
-//    -> index 선택적 : 처리할 현재 요소의 인덱스.
-//    -> array 선택적 : filter를 호출한 배열.
-
-// thisArg 선택적 : callback을 실행할 때 this 로 사용하는 값.
-
-// return(반환) 값
-//    -> 테스트를 통과한 요소로 이루어진 새로운 배열
-//    -> 어떤 요소도 테스트를 통과하지 못하면 빈 배열을 반환
-
 import './TodoList.css';
 import TodoItem from "./TodoItem";
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const TodoList = ({ todo, onUpdate, onDelete }) => {
-
-    // 검색어 처리 위한 state 변수와 onChangeSearch 추가
     const [search, setSearch] = useState("");
     const onChangeSearch = (e) => { setSearch(e.target.value) }
-
-    // 검색어 처리 위한 필터링 기능
-    // 필터링 완료된 배열을 map() 으로 전달
-    // 검색어가 있으면 filter 적용, 대소문자 구별하지 않도록 함
     const getSearchResult = () => {
         return search === "" ? todo
             : todo.filter((it) => it.content.toLowerCase().includes(search.toLowerCase()));
     }
 
+    // ** 분석 기능 추가
+    // 1) 분석 함수 추가
+    // => 배열 todo 의 아이템 총갯수, 완료갯수, 미완료갯수 를 객체에 담아 return
+    /* 
+        const analyzeTodo = () => {
+            console.log('** analyzeTodo 호출됨 **');
+    
+            // todo 배열의 아이템의 총 갯수
+            const totalCount = todo.length;
+            // todo 배열의 완료 아이템 갯수
+            const doneCount = todo.filter((it) => it.isDone).length;
+            // => 배열 todo 의 isDone 의 값이 true 인 item 의 갯수
+            // filter() 도 결과값을 배열로 리턴하므로 length 로 갯수 확인 가능
+            // todo 배열의 미완료 아이템 갯수
+            const notDoneCount = totalCount - doneCount;
+            return { totalCount, doneCount, notDoneCount }
+        }
+     */
+
+
+    // 2) 분석 함수 호출
+    /*
+    const totalCount = analyzeTodo().totalCount;
+    const doneCount = analyzeTodo().doneCount;
+    const notDoneCount = analyzeTodo().notDoneCount;
+    */
+    // => console.log 를 확인하면 6번 호출됨
+
+    /*
+    const { totalCount, doneCount, notDoneCount } = analyzeTodo();
+    */
+    // => analyzeTodo 값을 호출하고 return 값을 구조분해 할당
+    // => console.log() 확인하면 2번 호출됨
+
+
+    // 3) 분석 결과
+    // => analyzeTodo() 는 todo 에 저장 아이템이 많아질수록
+    //    연산량이 많이지며, 성능에 영향을 줄수있음
+    // => 불필요한 호출이 있는지 확인 위해 analyzeTodo() 에 콘솔 메시지 추가
+    //   ( 마운트시 1 + 검색어 단어 입력시마다 호출됨 을 확인 )
+    // => 재연산이 필요없는 경우에도 호출됨을 알 수 있다.
+    //   ( 컴포넌트 내부의 함수는 리랜더링 할때 마다 호출되기 때문 )  
+    // => 해결 위해 useMemo() 적용.
+
+
+    // 4) useMemo() 적용 최적화
+    // => const value = useMemo(callback, [의존성배열]);
+    //    의존성배열 의 값이 바뀌면 callback 함수를 실행하고 결과값 return 
+    /* const { totalCount, doneCount, notDoneCount } = useMemo(analyzeTodo, [todo]); */
+    // => todo 도 배열이지만 useMemo() 에서는 배열 안에 todo 를 넣어야 함
+    // => todo 배열의 값에 변경사항이 있을 때에만 analyzeTodo 함수 호출됨
+
+
+    // 5) 위의 내용을 축약
+    const analyzeTodo = useMemo(() => {
+        console.log('** analyzeTodo 호출됨 **');
+
+        const totalCount = todo.length;
+        const doneCount = todo.filter((it) => it.isDone).length;
+        const notDoneCount = totalCount - doneCount;
+        return { totalCount, doneCount, notDoneCount }
+    }, [todo]);
+
+    const { totalCount, doneCount, notDoneCount } = analyzeTodo;
+
+    /* 기본적으로 컴포넌트 내부의 함수는 리랜더링 할때 마다 호출되지만, 위의 최적화를 통해
+        todo 배열의 값에 변경사항이 있는 경우에만 호출되도록 함
+        => TodoList 검색 시에는 todo 배열 변경사항 없으므로 호출되지 않음(console 출력 x) */
+
     return (
         <div className="TodoList">
             <h3>Todo List ✔</h3>
+            <div style={{ fontSize: '20px', textAlign: 'center', fontWeight: 'bold' }}>
+                <div>* 총일정 갯수 : {totalCount}</div>
+                <div>* 완료된 일정 : {doneCount}</div>
+                <div>* 미완료 일정 : {notDoneCount}</div>
+            </div>
+
             <input className="searchBar"
                 value={search}
                 onChange={onChangeSearch}
                 placeholder="검색어를 입력하세요"></input>
             <div className='list_wrapper'>
-                {/* 1. 배열 전달받기 전 출력용 */}
-                {/*
-                <TodoItem />
-                <TodoItem />
-                <TodoItem />
-                */}
-
-                {/* 2. 배열(todo) 전달 후 */}
-                {/* {todo.map((it) => (<TodoItem key={it.id}  {...it} />))} */}
-                {/* => key 
-            - 각각의 컴포넌트 구분을 위해 사용되며 반드시 지정해야함 (경고메세지)
-            - 일정 수정 삭제시 사용됨
-            => 펼침(Spread)연산자 로 객체형인 it 를 TodoItem 으로 전달
-                {...it} -> {id:"", isDone:... }    */}
-
-                {/* 3. 배열(todo) 에 filter() 적용
-                => TodoItem 으로 전달하기 전 filter() 처리하고 처리된 배열을 map() 으로 전달*/}
                 {getSearchResult().map((it) => (
                     <TodoItem key={it.id} {...it} onUpdate={onUpdate} onDelete={onDelete} />
                 ))}

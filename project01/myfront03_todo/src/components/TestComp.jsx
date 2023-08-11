@@ -22,7 +22,7 @@ import { useReducer } from "react";
 
 // 1. useState 적용
 /*
-function TestComp() {
+function TestComp01() {
     const [count, setCount] = useState(0);
     const onIncrease = () => { setCount(count + 1) }
     const onDecrease = () => { setCount(count - 1) }
