@@ -26,7 +26,7 @@ import { useReducer, useRef, useCallback } from 'react';
 // => TodoList 컴포넌트에 analyzeTodo 함수 추가 하고 Test
 
 // ** useCallback()
-// => 함수의 불필요한 재생성 방지
+// => 함수의 불필요한 재실행 방지
 //    컴포넌트 리랜더링시 내부의 함수를 재생성하지 않도록 메모이제이션함.  
 // => useCallback(callback, [의존성배열])
 //    [의존성배열] 이 변경되면 callback 함수를 재생성 return 함.
@@ -40,11 +40,20 @@ import { useReducer, useRef, useCallback } from 'react';
 // => 아래의 onUpdate, onDelete 함수를 리랜더링 할때마다 재생성 하지 않도록 적용.
 
 // ** React.memo
-// => 컴포넌트의 불필요한 리랜더링 방지 (Header 에 적용)
+// => 컴포넌트의 불필요한 리랜더링을 방지해주는 고차 컴포넌트 (Header 에 적용)
+// => 리랜더링의 기준은 부모에서 전달된 Props가 변경된 경우에만 리랜더링됨    
 // => React.memo(메모이제이션 하려는 컴포넌트)
 //    인자로 전달된 컴포넌트를 메모이제이션 된 컴포넌트로 return
+//    이를 Enhanced(강화된, 향상된) Component 라함.
 // => 컴포넌트 선언과 동시에 적용하는것 도 가능
 //    const comp = React.memo(() => {....})
+
+// => 고차 컴포넌트 (HOC: High Order Component)
+//    컴포넌트 기능을 재사용 하기위한 리액트 고급기슬 
+//    인자로 전달된 컴포넌트에 새로운 기능을 추가해 
+//    더욱 강화된 컴포넌트를 return 하는 컴포넌트(함수) 를 말하며
+//    이때 return 되는 강화된 컴포넌트를 Enhanced(강화된, 향상된) Component 라함.   
+// => const enhanced_Component = React.memo(Header)
 
 //=================================================
 
@@ -135,6 +144,9 @@ function App() {
       });
     }
     */
+  // => useCallback 을 적용하지 않으므로 일정을 추가할 때 마다 App 컴포넌트 리랜더링 되면서
+  //    변경된 State 변수값에 접근하여 정확한 길이를 출력함
+
   const onUpdate = useCallback((targetId) => {
     dispatch({
       type: "Update",
