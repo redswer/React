@@ -4,34 +4,6 @@ import Topics from './pages/Topics';
 import Contact from './pages/Contact';
 import { Routes, Route, Link, NavLink } from 'react-router-dom';
 
-// ** Routing
-// => 경로를 지정하는 과정
-// ** Page Routing
-// => 요청에 따라 적절한 페이지를 반환하는 과정
-// => 이때 웹 페이지를 어디서 만드느냐에 따라 
-//    SSR(Server Side Rendering), CSR(Client Side Rendering) 로 나뉘며,
-//    리액트는 SPA(Single Page Application) 이며 CSR 방식을 채택하고 있다.
-// => 두 방법 모두 장단점이 있으므로 서비스의 목적에 따라 적절한 방식을 채택한다.
-// => CSR 은 처음접속시 Html 과 JS 에플리케이션을 함께 제공받기 때문에 처음접속은 느리지만,  
-//    이후 페이지 이동은 브러우저에서 교체하므로 훨씬 빠르다.
-
-
-// ** Router 적용하기
-// => 마치 Page 가 이동하는것처럼 url 에 의해 
-//    적당한 컴포넌트가 배치 되도록 해줌
-
-// 1. 프로젝트 root 경로에 리액트 라우터 설치
-
-// 2. Project 구성
-// => src -> components, pages, images
-
-// 3. 실습
-// 3.1) BrowserRouter 컴포넌트
-
-// 3.2) HashRouter 컴포넌트 
-
-// 3.3) Nested Routing
-
 function App() {
   return (
     <div className="App">
@@ -52,11 +24,11 @@ function App() {
       </ul>
       */}
       {/* 2.2) Link to : 페이지가 리로드되지 않음 */}
-      <ul>
+      {/*  <ul>
         <li><Link to='/'>Home</Link></li><br />
         <li><Link to='/topics'>Topics</Link></li><br />
         <li><Link to='/contact'>Contact</Link></li><br />
-      </ul>
+      </ul> */}
 
       {/* 2.3) NavLink_to*/}
       {/* 사용자가 어느 페이지에 위치하는지 알 수 있도록 해줌
@@ -81,6 +53,7 @@ function App() {
         {/* => Topics 컴포넌트에서의 Route 를 위해 path의 topoics 뒤에 /* 를 붙여줌 */}
 
         <Route path='/contact' element={<Contact />} />
+        <Route path='/*' element={'Not Found'} />
       </Routes>
     </div>
   );
