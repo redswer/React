@@ -16,6 +16,7 @@
 // => location 객체의 속성 : pathname, search(쿼리문자열) 등
 //
 
+import { useState } from "react";
 import emotion1 from "../img/emotion1.png";
 import emotion2 from "../img/emotion2.png";
 import emotion3 from "../img/emotion3.png";
@@ -81,10 +82,13 @@ function SelectEmotion() {
     const queryId = searchParam.get("id");
     console.log(`** queryId=${queryId}, name=${searchParam.get("name")}`);
 
+    // 새로운 url 입력 시 리랜더링을 위해 state 변수 추가하고, 새롭게 전달되는 queryId 로 초기화
+    const [stateId, setStateId] = useState(queryId);
+
     //  ** useLocation
     const location = useLocation();
     console.log(`** location = ${location}`);
-    console.log(`** location.path = ${location.pathname}`);
+    console.log(`** location.pathname = ${location.pathname}`);
     console.log(`** location.search = ${location.search}`);
 
     // => filter 적용
