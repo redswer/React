@@ -1,40 +1,41 @@
-// 3.2) 입력 (create)
-// new 일정(content)을 담을 state 생성
-// new 일정 처리할 onChangeContent 이벤트 핸들러 작성
-// input 엘리먼트 속성 지정
+// => Context가 공급하는 Data 사용하기
+//    - useContext(Context)
+//      인자는 Data를 공급할 Context 이고, 
+//      이 Context 가 제공하는 Data를 return 함.  
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import './TodoEditor.css';
+import { TodoContext } from '../App';
 
-// new 일정을 onCreate(content) 함수를 이용해 부모의 state 변수인 배열 todo 에 저장
-const TodoEditor = ({ onCreate }) => {
+// const TodoEditor = ({ onCreate }) => {
+    // => Props 전달은 필요 없으므로 삭제
+const TodoEditor = () => {
+
+    // ** Context 적용
+    // => import : useContext, TodoContext
+    const { onCreate } = useContext(TodoContext);
+    // => useContext(TodoContext) 정의
 
     const [content, setContent] = useState("");
-    // => new 일정 처리할 onChangeContent 이벤트 핸들러
 
     const onChangeContent = (e) => {
         setContent(e.target.value);
     }
 
     const inputRef = useRef();
-    const onSubmit = (e) => {
 
-        // ** 기능 업그레이드 1 **
-        // 입력값 무결성 확인
-        // = content 값이 비어있으면 input 에 focus 가 머물게 하여 빈 Data 입력 방지
+    const onSubmit = (e) => {
         if (!content) {
             e.preventDefault();
             inputRef.current.focus();
             return;
+
         } else {
             onCreate(content);
-            // => 부모 (App)으로부터 전달받은 함수
         }
         setContent("");
     }
 
-    // ** 기능 업그레이드 2 **
-    // input 에서 일정 입력 후 엔터 키 눌렀을 때에도 submit 이 가능하도록 함
     const onKeyDown = (e) => {
         if (e.keyCode === 13) { onSubmit() }
     }
