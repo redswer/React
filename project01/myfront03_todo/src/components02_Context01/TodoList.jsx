@@ -1,18 +1,20 @@
-// ** Context 적용2
+// ** Context 적용
 // => immport: useContext, TodoContext 
-// => todo 만 필요하므로 용도에 맞는 Context 사용
+// => useContext() 로 Data 전달받음
+//    TodoList 컴포넌트 인자로 전달받은 Props Data는 필요 없으므로 삭제  
 
 // ======================================================================
 import "./TodoList.css";
 import TodoItem  from "./TodoItem";
 import { useState, useMemo, useContext } from "react";
-import { TodoStateContext } from "../App";
+import { TodoContext } from "../App";
 
 const TodoList = () => {
-  // ** 용도에 맞는 Context 적용
-  // => TodoStateContext.Provider 에서 value={todo} 단일객체로 전달되므로 
-  //    { } 없이 todo 를 전달 받는다. 
-  const todo = useContext(TodoStateContext);
+  // ** Context 적용
+  // => 구조분해 적용해서 필요한 Data 만 정의
+  //    onUpdate, onDelete 는 TodoItem 으로 전달하기 위해 필요했지만,
+  //    이제는 필요없으므로 todo 만 정의함 
+  const {todo} = useContext(TodoContext);
 
   // ------------------------------------------------
   // ** 검색 기능 

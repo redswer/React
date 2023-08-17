@@ -1,20 +1,22 @@
-// ** Context 적용2
+// ** Context 적용
 // => immport: useContext, TodoContext 
-// => onUpdate, onDelete 가 필요하니, 용도에 맞는 Context 사용
+// => useContext() 로 Data 전달받음
+//    TodoItem 컴포넌트 인자로 전달받은 Props Data 중
+//    Context 로 전달받는 Data는 필요 없으므로 삭제  
 
 import "./TodoItem.css";
 import React, {useContext} from "react";
-import { TodoDispatchContext } from "../App";
+import { TodoContext } from "../App";
  
 const TodoItem = ({id, isDone, content, createDate}) => {
 
-  // ** Context 적용2
-  // => 용도에 맞는 Context 적용후 최적화 기능 점검
+  // ** Context 적용
+  // => 적용후 최적화 기능 점검
   //    React.memo 이 작동하지 않음을 확인
   //    이유는 todo 와 함수들이 하나의 Context 로 묶여있기 때문에
   //    관련이 없는 컴포넌트에서도 부모가 랜더링 되면 같이 랜더링된다.
   //    그러므로 Context 는 역할별로 분리하는것이 바람직하다.
-  const { onUpdate, onDelete } = useContext(TodoDispatchContext);
+  const { onUpdate, onDelete } = useContext(TodoContext);
 
   const onChangeCheckbox = () => { onUpdate(id); }
   //const onClickButton = () => { onDelete(id); }
